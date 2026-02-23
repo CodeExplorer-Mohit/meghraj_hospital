@@ -187,6 +187,65 @@ function showToast(message, type) {
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
+// ===== BOOKING BOTTOM SHEET LOGIC =====
+const bookingSheet = document.getElementById('bookingSheet');
+const bookingBackdrop = document.getElementById('bookingBackdrop');
+const closeSheet = document.getElementById('closeSheet');
+const mobileBookingForm = document.getElementById('mobileBookingForm');
+
+function openBookingSheet() {
+  if (window.innerWidth <= 700) {
+    bookingSheet.classList.add('active');
+    bookingBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent scroll
+  }
+}
+
+function closeBookingSheet() {
+  bookingSheet.classList.remove('active');
+  bookingBackdrop.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Trigger sheet for all "Book Appointment" links on mobile
+document.querySelectorAll('a[href="#contact"]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    if (window.innerWidth <= 700) {
+      e.preventDefault();
+      openBookingSheet();
+    }
+  });
+});
+
+if (closeSheet) closeSheet.addEventListener('click', closeBookingSheet);
+if (bookingBackdrop) bookingBackdrop.addEventListener('click', closeBookingSheet);
+
+// Mobile Form Submission
+if (mobileBookingForm) {
+  mobileBookingForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('ms_name').value.trim();
+    const phone = document.getElementById('ms_phone').value.trim();
+
+    if (!name || !phone) {
+      showToast('Please fill in your name and phone number.', 'error');
+      return;
+    }
+
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+      showToast('✓ Appointment request sent! We will contact you soon.', 'success');
+      mobileBookingForm.reset();
+      closeBookingSheet();
+      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirm Appointment';
+      submitBtn.disabled = false;
+    }, 1500);
+  });
+}
+
 // ===== SERVICE CARD RIPPLE EFFECT =====
 document.querySelectorAll('.service-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {

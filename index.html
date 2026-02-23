@@ -600,6 +600,41 @@
         </a>
     </div>
 
+    <!-- Booking Bottom Sheet (Mobile Only) -->
+    <div class="booking-backdrop" id="bookingBackdrop"></div>
+    <div class="booking-sheet" id="bookingSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <button class="sheet-close" id="closeSheet"><i class="fas fa-times"></i></button>
+            <h3>Book Appointment</h3>
+            <p>Fill in the details for a quick neurology consultation.</p>
+        </div>
+        <div class="sheet-body">
+            <form class="booking-form" id="mobileBookingForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Your Full Name" required id="ms_name">
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Your Phone Number" required id="ms_phone">
+                </div>
+                <div class="form-group">
+                    <select id="ms_service">
+                        <option value="">Select Condition</option>
+                        <option>Headache & Migraine</option>
+                        <option>Epilepsy & Seizures</option>
+                        <option>Stroke</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Describe your symptoms (optional)..." rows="3" id="ms_message"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full"><i class="fas fa-paper-plane"></i> Confirm
+                    Appointment</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Success Toast -->
     <div class="toast" id="toast"><i class="fas fa-check-circle"></i> Appointment request sent! We will contact you
         soon.</div>

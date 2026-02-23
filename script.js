@@ -1,7 +1,8 @@
 // ===== INIT AOS =====
 AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic', offset: 60 });
 
-// ===== PRELOADER =====
+// ===== CONFIGURATION =====
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztNVNgRJCDUD5Jq8_pT0WKIkAYdCZ2VIIxrI50JSY_FsKGSe9Kllyrpp0h7b4y6CE2kw/exec';
 window.addEventListener('load', () => {
   setTimeout(() => {
     const preloader = document.getElementById('preloader');
@@ -159,23 +160,41 @@ if (contactForm) {
       return;
     }
 
-    // Simulate form send
+    // Send to Google Sheets
     const submitBtn = this.querySelector('button[type="submit"]');
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    const originalContent = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
-      submitBtn.innerHTML = '<i class="fas fa-check"></i> Request Sent!';
-      submitBtn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
-      showToast('✓ Appointment request sent! We will contact you soon.', 'success');
-      contactForm.reset();
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Phone', phone);
+    formData.append('Condition/Service', document.getElementById('fservice').value);
+    formData.append('Message / Symptoms', document.getElementById('fmessage').value);
 
-      setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Appointment Request';
-        submitBtn.style.background = '';
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors' // Google Script returns CORS error but still works with 'no-cors'
+    })
+      .then(() => {
+        showToast('✓ Appointment request sent! We will contact you soon.', 'success');
+        contactForm.reset();
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> Request Sent!';
+        submitBtn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+
+        setTimeout(() => {
+          submitBtn.innerHTML = originalContent;
+          submitBtn.style.background = '';
+          submitBtn.disabled = false;
+        }, 3000);
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        showToast('Something went wrong. Please try again.', 'error');
+        submitBtn.innerHTML = originalContent;
         submitBtn.disabled = false;
-      }, 3000);
-    }, 1500);
+      });
   });
 }
 
@@ -232,17 +251,36 @@ if (mobileBookingForm) {
       return;
     }
 
+    // Send to Google Sheets
     const submitBtn = this.querySelector('button[type="submit"]');
+    const originalContent = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
-      showToast('✓ Appointment request sent! We will contact you soon.', 'success');
-      mobileBookingForm.reset();
-      closeBookingSheet();
-      submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Confirm Appointment';
-      submitBtn.disabled = false;
-    }, 1500);
+    const formData = new FormData();
+    formData.append('Name', name);
+    formData.append('Phone', phone);
+    formData.append('Condition/Service', document.getElementById('ms_service').value);
+    formData.append('Message / Symptoms', document.getElementById('ms_message').value);
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'
+    })
+      .then(() => {
+        showToast('✓ Appointment request sent!', 'success');
+        mobileBookingForm.reset();
+        closeBookingSheet();
+        submitBtn.innerHTML = originalContent;
+        submitBtn.disabled = false;
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        showToast('Error. Please try again.', 'error');
+        submitBtn.innerHTML = originalContent;
+        submitBtn.disabled = false;
+      });
   });
 }
 

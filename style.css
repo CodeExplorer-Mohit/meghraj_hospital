@@ -1788,7 +1788,19 @@ img {
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 40px;
+    padding: 60px 0 40px;
+    text-align: center;
+  }
+
+  .footer-logo,
+  .footer-socials,
+  .footer-contact-item {
+    justify-content: center;
+  }
+
+  .footer-col ul li a {
+    justify-content: center;
   }
 
   .section-title {

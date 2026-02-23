@@ -2,7 +2,7 @@
 AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic', offset: 60 });
 
 // ===== CONFIGURATION =====
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztNVNgRJCDUD5Jq8_pT0WKIkAYdCZ2VIIxrI50JSY_FsKGSe9Kllyrpp0h7b4y6CE2kw/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwa-jkaI2xJUTqIxVBYL9QpoAE-vtQvbjjlS4a0fTdPMtrDKNv-DwZ-rsLyfdKZSqJIdw/exec';
 window.addEventListener('load', () => {
   setTimeout(() => {
     const preloader = document.getElementById('preloader');

@@ -1789,7 +1789,7 @@ img {
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 40px;
-    padding: 60px 0 40px;
+    padding: 60px 24px 40px;
     text-align: center;
   }
 
@@ -1801,6 +1801,12 @@ img {
 
   .footer-col ul li a {
     justify-content: center;
+  }
+
+  .footer-col p {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .section-title {

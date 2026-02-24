@@ -260,8 +260,8 @@ if (mobileBookingForm) {
     const formData = new FormData();
     formData.append('Name', name);
     formData.append('Phone', phone);
-    formData.append('Condition/Service', document.getElementById('ms_service').value);
-    formData.append('Message / Symptoms', document.getElementById('ms_message').value);
+    formData.append('Condition/Service', 'Mobile Quick Booking');
+    formData.append('Message / Symptoms', 'No message provided');
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',

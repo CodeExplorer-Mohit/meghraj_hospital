@@ -340,7 +340,7 @@ if (canvas) {
     particles.forEach(p => {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(56,189,248,${p.alpha})`;
+      ctx.fillStyle = `rgba(18,166,148,${p.alpha})`;
       ctx.fill();
       p.x += p.dx;
       p.y += p.dy;

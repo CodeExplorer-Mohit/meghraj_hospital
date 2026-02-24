@@ -227,7 +227,7 @@ function closeBookingSheet() {
 }
 
 // Trigger sheet for all "Book Appointment" links on mobile
-document.querySelectorAll('a[href="#contact"]').forEach(btn => {
+document.querySelectorAll('a[href="contact.html"], .mobile-nav-item.action').forEach(btn => {
   btn.addEventListener('click', (e) => {
     if (window.innerWidth <= 700) {
       e.preventDefault();
